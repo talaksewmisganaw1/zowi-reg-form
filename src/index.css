@@ -75,16 +75,16 @@ body {
     border: solid 2px var(--btn-bgr-2);
     border-radius: .2rem;
     color: #000;
+    cursor: pointer;
 }
 
 .add-btn i {
     background-color: var(--btn-bgr-2);
-    padding: .2rem .3rem;
+    padding: .4rem .3rem;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
-
 }
 
 .add-btn span {
@@ -230,4 +230,13 @@ tr:nth-child(even) {
     border: none;
     outline: none;
     background-color: inherit;
+}
+
+.search-bar:focus-within {
+    border-color: #57e37a;
+    box-shadow: 0 0 4px #57e37a inset;
+}
+
+input::placeholder {
+    font-style: italic;
 }

@@ -1,15 +1,16 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import Searchbar from "./Searchbar";
 
 
 
 function Table() {
   const [medicalClients, setMedicalClients] = useState([
     {
-            id: 1,
-            name: "አበበ ፍራንሲስኮ",
-            age: "64",
-            sex: "male",
+            id: 4,
+            name: "አንጀሊና ቢክሰኝ",
+            age: "32",
+            sex: "female",
             location: "",
             diseaseType: {
                 highBloodPressure: false,
@@ -32,7 +33,36 @@ function Table() {
             bloodSugarLevel: "",
             weight: "",
             waistSize: "",
-            phoneNumber: ""
+            phoneNumber: "0944444444"
+        },
+        {
+            id: 3,
+            name: "ትርሃስ ወርቁ",
+            age: "55",
+            sex: "female",
+            location: "",
+            diseaseType: {
+                highBloodPressure: false,
+                diabetes: false,
+                cholestrole: false,
+                obesity: false,
+                other: false
+            },
+            duration: {
+                bloodPressureDuration: "",
+                diabetesDuration: "",
+                cholestroleDuration: "",
+                obesityDuration: "",
+                otherDuration: ""
+            },
+            doYouTakeMedicine: "",
+            typeOfMedicine: "",
+            nameOfTheTablet: "",
+            bloodPressureReading: "",
+            bloodSugarLevel: "",
+            weight: "",
+            waistSize: "",
+            phoneNumber: "0933333333"
         },
         {
             id: 2,
@@ -61,13 +91,13 @@ function Table() {
             bloodSugarLevel: "",
             weight: "",
             waistSize: "",
-            phoneNumber: ""
+            phoneNumber: "0922222222"
         }, 
-        {
-            id: 3,
-            name: "ትርሃስ ወርቁ",
-            age: "55",
-            sex: "female",
+    {
+            id: 1,
+            name: "abebe",
+            age: "64",
+            sex: "male",
             location: "",
             diseaseType: {
                 highBloodPressure: false,
@@ -90,45 +120,20 @@ function Table() {
             bloodSugarLevel: "",
             weight: "",
             waistSize: "",
-            phoneNumber: ""
-        },
-        {
-            id: 4,
-            name: "አንጀሊና ቢክሰኝ",
-            age: "32",
-            sex: "female",
-            location: "",
-            diseaseType: {
-                highBloodPressure: false,
-                diabetes: false,
-                cholestrole: false,
-                obesity: false,
-                other: false
-            },
-            duration: {
-                bloodPressureDuration: "",
-                diabetesDuration: "",
-                cholestroleDuration: "",
-                obesityDuration: "",
-                otherDuration: ""
-            },
-            doYouTakeMedicine: "",
-            typeOfMedicine: "",
-            nameOfTheTablet: "",
-            bloodPressureReading: "",
-            bloodSugarLevel: "",
-            weight: "",
-            waistSize: "",
-            phoneNumber: ""
-        }
+            phoneNumber: "0911111111"
+        },  
   ]);
 
+  const [searchValue, setSearchValue] = useState("");
+  
+  const filterdItems = searchValue? medicalClients.filter((client) => client.name.startsWith(searchValue) || client.phoneNumber.startsWith(searchValue)): medicalClients;
+
   const addrow = () => {
-    setMedicalClients([
-        ...medicalClients, 
+    setMedicalClients([ 
         {
             id: medicalClients.length + 1,
             name: "",
+            phoneNumber: "",
             age: "",
             sex: "",
             location: "",
@@ -152,27 +157,36 @@ function Table() {
             bloodPressureReading: "",
             bloodSugarLevel: "",
             weight: "",
-            waistSize: "",
-            phoneNumber: ""
-        }, 
+            waistSize: ""
+        }, ...medicalClients
     ]);
   };
 
   const handleChange = (index, field, value, name) => {
+    
+    {console.log(index)}
     const updated = [...medicalClients];
     name? updated[index][field][name] = value: updated[index][field] = value;
     setMedicalClients(updated);
   }
 
+  const handleSearch = (e) => {
+    setSearchValue(e.currentTarget.value);
+  }
+
   return (
     <div className="table-and-btn">
-        <button className="add-btn" onClick={addrow}><i className="fa-solid fa-pencil"></i><span>አዲስ ታካሚ</span></button>
+        <div className="btn-and-search">
+            <Searchbar handleSearch={handleSearch} searchValue={searchValue}/>
+            <button className="add-btn" onClick={addrow}><i className="fa-solid fa-pencil"></i><span>አዲስ ታካሚ</span></button>
+        </div>
         <div className="table-container">
             <table className="table">
                 <thead>
                     <tr className="border-1">
                         <th className="table-header card-number">ካርድ ቁጥር</th>
                         <th className="table-header">ስም</th>
+                        <th className="table-header">ስልክ ቁጥር</th>
                         <th className="table-header">እድሜ</th>
                         <th className="table-header">ፆታ</th>
                         <th className="table-header">የመጡበት አካባቢ</th>
@@ -185,21 +199,23 @@ function Table() {
                         <th className="table-header">የግፊት መጠን</th>
                         <th className="table-header">የክብደት መጠን</th>
                         <th className="table-header">የሆድ ዙሪያ መጠን</th>
-                        <th className="table-header">ስልክ ቁጥር</th>
                     </tr>
                 </thead>
                 <tbody>
                     {   
-                        medicalClients.map((row, index) => (
+                        filterdItems.length > 0? (filterdItems.map((row, index) => (
                         <tr className="client-information" key={row.id}>
                             <td className="table-data card-number">
                                 {row.id < 1000? String(row.id).padStart(4,'0'): row.id} 
                             </td>
                             <td className="table-data">
-                                <input type="text" value={row.name} onChange={(e) => {handleChange(index, "name", e.target.value)}}/>
+                                <input type="text" value={row.name} onChange={(e) => {handleChange(index, "name", e.target.value)}} placeholder="የታካሚ ስም" className="name"/>
                             </td>
                             <td className="table-data">
-                                <input type="number" value={row.age} onChange={(e) => {handleChange(index, "age", e.target.value)}} />
+                                <input type="number" value={row.phoneNumber} onChange={(e) => {handleChange(index, "phoneNumber", e.target.value)}} placeholder="ስልክ ቁጥር" className="number"/>
+                            </td>
+                            <td className="table-data">
+                                <input type="number" value={row.age} onChange={(e) => {handleChange(index, "age", e.target.value)}} placeholder="የታካሚ እድሜ" className="age"/>
                             </td>
                             <td className="table-data">
                                 <div className="sex-container radio-btn-container">
@@ -403,11 +419,8 @@ function Table() {
                             <td className="table-data">
                                 <input type="text" value={row.waistSize} onChange={(e) => {handleChange(index, "waistSize", e.target.value)}}/>
                             </td>
-                            <td className="table-data">
-                                <input type="number" value={row.phoneNumber} onChange={(e) => {handleChange(index, "phoneNumber", e.target.value)}}/>
-                            </td>
                         </tr> 
-                        )) 
+                        ))): <tr style={{fontSize: "1.3rem", width: "100%"}}><td style={{padding: ".2rem .2rem .2rem 3rem", color: "red"}} colSpan="5"> NO MATCH FOUND! </td></tr>
                     }
                 </tbody>
             </table>
