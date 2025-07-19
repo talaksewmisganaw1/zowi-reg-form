@@ -158,14 +158,26 @@ tr:nth-child(even) {
     align-items: center;
     gap: 1rem;
     margin-top: .5rem;
-    /* border-color: red; */
+    /* max-width: 100%; */
+    /* border: solid 1px red; */
+    /* padding-right: .5rem; */
 }
+
+/* .radio-btn-container * {
+} */
 
 .radio-btn-container label {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: .3rem;
+    max-width: 100% !important; 
+    /* border: solid 2px green; */
+}
+
+.radio-btn-container label input {
+    display: block;
+    /* border: solid 5px red; */
 }
 
 .disease-type-container {
@@ -190,21 +202,34 @@ tr:nth-child(even) {
     gap: .5rem;
 }
 
-.duration-container label {
+.duration {
     display: flex;
     align-items: center;
     justify-content: center;
     text-wrap: nowrap;
-    /* flex-direction: column; */
+    margin-right: 3rem;
 }
 
-.duration-container input {
+.duration-input {
+    width: 3rem;
     margin-left: .5rem;
     border: solid 1px rgba(128, 128, 128, 0.148);
     border-left: none;
-    border-top-right-radius: 1rem;
-    border-bottom-right-radius: 1rem;
+    /* border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem; */
+} 
+
+.duration-label {
+    white-space: pre-wrap;
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: center;
 }
+
+/* .duration-input {
+    width: 1rem;
+} */
 
 .btn-and-search {
     padding: .1rem;
@@ -239,4 +264,110 @@ tr:nth-child(even) {
 
 input::placeholder {
     font-style: italic;
+}
+
+/* .med-icon-container {
+    
+}   */
+
+.med-icon {
+    width: 100%;
+    height: 100%;
+    padding: .5rem;
+    border: none;
+    outline: none;
+    color: rgb(42, 138, 42);
+    background-color: inherit;
+}
+
+.med-icon:hover {
+    /* box-shadow: 0 0 15px rgb(175, 255, 54) inset; */
+    box-shadow: 0 0 15px var(--btn-bgr-3) inset;
+}
+
+.medical-information {
+    padding: 3rem 7rem;
+    min-height: 100vh;
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+    background-color: var(--table-bgr);
+    position: relative;
+}
+
+.inputs {
+    width: 100%;
+    margin-top: 1.05rem;
+}
+
+.labels {
+    white-space: nowrap;
+    width: 25%;
+    border-left: solid 3px #bbb;
+    padding: 0 .5rem;
+    /* margin-right: 5rem; */
+}
+
+.callingday-input {
+    margin-left: 1rem;
+    padding: .1rem .4rem;
+}
+
+.lined-textarea {
+  display: inline-block;
+  /* margin-top: 1.75rem; */
+  width: 100%;
+  height: 100px;
+  line-height: 1.5em;
+  font-family: monospace;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent 1.4em,
+      #999 1.5em
+    );
+  padding: 0.5em;
+  border: 1.34px solid #999;
+  resize: vertical;
+}
+
+.information-label-and-input {
+    display: flex;
+    /* border: solid 2px red; */
+    
+    min-width: 100%; 
+    margin-top: 1rem;
+}
+
+.back-btn {
+    position: absolute;
+    top: 2rem;
+    left: 3rem;
+    font-size: 1.3rem;
+    padding: .5rem;
+    border-radius: 50%;
+    border: 1px solid var(--txt-clr);
+    background-color: var(--even-rw-bgr);
+}
+
+.back-btn:hover {
+    background-color: var(--header-rw-bgr);
+}
+
+.name-in-result-page {
+    text-align: left;
+    font-size: 1.2rem;
+    text-decoration: underline;
+    margin-bottom: 3rem;
+    color: var(--txt-clr);
+}
+
+.name-in-result-page span {
+    font-weight: 600;
 }

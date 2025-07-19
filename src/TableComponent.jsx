@@ -1,128 +1,14 @@
 import { useState, useEffect } from "react"
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Searchbar from "./Searchbar";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilePen } from '@fortawesome/free-solid-svg-icons';
+import { Link } from "react-router-dom";
 
 
 
-function Table() {
-  const [medicalClients, setMedicalClients] = useState([
-    {
-            id: 4,
-            name: "አንጀሊና ቢክሰኝ",
-            age: "32",
-            sex: "female",
-            location: "",
-            diseaseType: {
-                highBloodPressure: false,
-                diabetes: false,
-                cholestrole: false,
-                obesity: false,
-                other: false
-            },
-            duration: {
-                bloodPressureDuration: "",
-                diabetesDuration: "",
-                cholestroleDuration: "",
-                obesityDuration: "",
-                otherDuration: ""
-            },
-            doYouTakeMedicine: "",
-            typeOfMedicine: "",
-            nameOfTheTablet: "",
-            bloodPressureReading: "",
-            bloodSugarLevel: "",
-            weight: "",
-            waistSize: "",
-            phoneNumber: "0944444444"
-        },
-        {
-            id: 3,
-            name: "ትርሃስ ወርቁ",
-            age: "55",
-            sex: "female",
-            location: "",
-            diseaseType: {
-                highBloodPressure: false,
-                diabetes: false,
-                cholestrole: false,
-                obesity: false,
-                other: false
-            },
-            duration: {
-                bloodPressureDuration: "",
-                diabetesDuration: "",
-                cholestroleDuration: "",
-                obesityDuration: "",
-                otherDuration: ""
-            },
-            doYouTakeMedicine: "",
-            typeOfMedicine: "",
-            nameOfTheTablet: "",
-            bloodPressureReading: "",
-            bloodSugarLevel: "",
-            weight: "",
-            waistSize: "",
-            phoneNumber: "0933333333"
-        },
-        {
-            id: 2,
-            name: "ጫላ መኮንን",
-            age: "76",
-            sex: "male",
-            location: "",
-            diseaseType: {
-                highBloodPressure: false,
-                diabetes: false,
-                cholestrole: false,
-                obesity: false,
-                other: false
-            },
-            duration: {
-                bloodPressureDuration: "",
-                diabetesDuration: "",
-                cholestroleDuration: "",
-                obesityDuration: "",
-                otherDuration: ""
-            },
-            doYouTakeMedicine: "",
-            typeOfMedicine: "",
-            nameOfTheTablet: "",
-            bloodPressureReading: "",
-            bloodSugarLevel: "",
-            weight: "",
-            waistSize: "",
-            phoneNumber: "0922222222"
-        }, 
-    {
-            id: 1,
-            name: "abebe",
-            age: "64",
-            sex: "male",
-            location: "",
-            diseaseType: {
-                highBloodPressure: false,
-                diabetes: false,
-                cholestrole: false,
-                obesity: false,
-                other: false
-            },
-            duration: {
-                bloodPressureDuration: "",
-                diabetesDuration: "",
-                cholestroleDuration: "",
-                obesityDuration: "",
-                otherDuration: ""
-            },
-            doYouTakeMedicine: "",
-            typeOfMedicine: "",
-            nameOfTheTablet: "",
-            bloodPressureReading: "",
-            bloodSugarLevel: "",
-            weight: "",
-            waistSize: "",
-            phoneNumber: "0911111111"
-        },  
-  ]);
+function Table({ medicalClients, setMedicalClients, medicalResult, setMedicalResult, handleChange, medicalResultIndex, setMedicalResultIndex }) {
+  
 
   const [searchValue, setSearchValue] = useState("");
   
@@ -145,11 +31,11 @@ function Table() {
                 other: false
             },
             duration: {
-                bloodPressureDuration: "",
-                diabetesDuration: "",
-                cholestroleDuration: "",
-                obesityDuration: "",
-                otherDuration: ""
+                bloodPressureDuration: {year: 0, month: 0, day: 0},
+                diabetesDuration: {year: 0, month: 0, day: 0},
+                cholestroleDuration: {year: 0, month: 0, day: 0},
+                obesityDuration: {year: 0, month: 0, day: 0},
+                otherDuration: {year: 0, month: 0, day: 0}
             },
             doYouTakeMedicine: "",
             typeOfMedicine: "",
@@ -157,21 +43,22 @@ function Table() {
             bloodPressureReading: "",
             bloodSugarLevel: "",
             weight: "",
-            waistSize: ""
+            waistSize: "",
+            callingDate: null,
+            resultFound: "",
+            correctionTaken: "",
+            summary: ""
         }, ...medicalClients
     ]);
   };
 
-  const handleChange = (index, field, value, name) => {
-    
-    {console.log(index)}
-    const updated = [...medicalClients];
-    name? updated[index][field][name] = value: updated[index][field] = value;
-    setMedicalClients(updated);
-  }
-
   const handleSearch = (e) => {
     setSearchValue(e.currentTarget.value);
+  }
+
+  const handleMedicalResultView = (index) => {
+    setMedicalResult(true);
+    setMedicalResultIndex(index)
   }
 
   return (
@@ -184,6 +71,7 @@ function Table() {
             <table className="table">
                 <thead>
                     <tr className="border-1">
+                        <th></th>
                         <th className="table-header card-number">ካርድ ቁጥር</th>
                         <th className="table-header">ስም</th>
                         <th className="table-header">ስልክ ቁጥር</th>
@@ -205,6 +93,7 @@ function Table() {
                     {   
                         filterdItems.length > 0? (filterdItems.map((row, index) => (
                         <tr className="client-information" key={row.id}>
+                            <td className="med-icon-container"><button className="med-icon" onClick={() => handleMedicalResultView(index)}><FontAwesomeIcon icon={faFilePen} /></button></td>
                             <td className="table-data card-number">
                                 {row.id < 1000? String(row.id).padStart(4,'0'): row.id} 
                             </td>
@@ -299,60 +188,180 @@ function Table() {
                             <td className="table-data">
                                 <div className="duration-container checkbox-container">
                                     {medicalClients[index].diseaseType.highBloodPressure && 
-                                        <label>
+                                        <div className="duration">
                                             ደም ግፊት ከተከሰተ: 
-                                            <input
-                                            type="text"
-                                            name={`bloodPressureDuration`}
-                                            value={row.duration.bloodPressureDuration}
-                                            onChange={(e) => handleChange(index, "duration", e.target.value, e.target.name)}
-                                            />
-                                        </label>
+                                            <label className="duration-label">
+                                                <input
+                                                    className="duration-input"
+                                                    type="number"
+                                                    name={`bloodPressureDuration`}
+                                                    value={row.duration.bloodPressureDuration.year}
+                                                    onChange={(e) => handleChange(index, "duration", e.target.value, e.target.name, e.target.name.year)}
+                                                />
+                                                አመት
+                                            </label>
+                                            <label className="duration-label">
+                                                <input
+                                                    className="duration-input"
+                                                    type="number"
+                                                    name={`bloodPressureDuration`}
+                                                    value={row.duration.bloodPressureDuration.month}
+                                                    onChange={(e) => handleChange(index, "duration", e.target.value, e.target.name, e.target.name.month)}
+                                                />
+                                                ወር
+                                            </label>
+                                            <label className="duration-label">
+                                                <input
+                                                    className="duration-input"
+                                                    type="number"
+                                                    name={`bloodPressureDuration`}
+                                                    value={row.duration.bloodPressureDuration.day}
+                                                    onChange={(e) => handleChange(index, "duration", e.target.value, e.target.name, e.target.name.day)}
+                                                />
+                                                ቀን 
+                                            </label>
+                                        </div>
                                     }
                                     
                                     {medicalClients[index].diseaseType.diabetes &&
-                                        <label>
+                                        <div className="duration">
                                             ስኳር ከተከሰተ: 
-                                            <input
-                                            type="text"
-                                            name={`diabetesDuration`}
-                                            value={row.duration["diabetesDuration"]}
-                                            onChange={(e) => handleChange(index, "duration", e.target.value, e.target.name)}
-                                            />
-                                        </label>
+                                            <label className="duration-label">
+                                                <input
+                                                    className="duration-input"
+                                                    type="number"
+                                                    name={`diabetesDuration`}
+                                                    value={row.duration.diabetesDuration.year}
+                                                    onChange={(e) => handleChange(index, "duration", e.target.value, e.target.name, e.target.name.year)}
+                                                />
+                                                አመት 
+                                            </label>
+                                            <label className="duration-label">
+                                                <input
+                                                    className="duration-input"
+                                                    type="number"
+                                                    name={`diabetesDuration`}
+                                                    value={row.duration.diabetesDuration.month}
+                                                    onChange={(e) => handleChange(index, "duration", e.target.value, e.target.name, e.target.name.month)}
+                                                />
+                                                ወር
+                                            </label>
+                                            <label className="duration-label">
+                                                <input
+                                                    className="duration-input"
+                                                    type="number"
+                                                    name={`diabetesDuration`}
+                                                    value={row.duration.diabetesDuration.day}
+                                                    onChange={(e) => handleChange(index, "duration", e.target.value, e.target.name, e.target.name.day)}
+                                                />
+                                                ቀን 
+                                            </label>
+                                        </div>
                                     }
                                     {medicalClients[index].diseaseType.cholestrole &&
-                                        <label>
-                                            ኮሌስትሮል ከተከሰተ: 
-                                            <input
-                                            type="text"
-                                            name={`cholestroleDuration`}
-                                            value={row.duration["cholestroleDuration"]}
-                                            onChange={(e) => handleChange(index, "duration", e.target.value, e.target.name)}
-                                            />
-                                        </label>
+                                        <div className="duration">
+                                            ኮሌስትሮል ከተከሰተ:
+                                             <label className="duration-label">
+                                                <input
+                                                    className="duration-input"
+                                                    type="number"
+                                                    name={`cholestroleDuration`}
+                                                    value={row.duration.cholestroleDuration.year}
+                                                    onChange={(e) => handleChange(index, "duration", e.target.value, e.target.name, e.target.name.year)}
+                                                />
+                                                አመት 
+                                            </label>
+                                            <label className="duration-label">
+                                                <input
+                                                    className="duration-input"
+                                                    type="number"
+                                                    name={`cholestroleDuration`}
+                                                    value={row.duration.cholestroleDuration.month}
+                                                    onChange={(e) => handleChange(index, "duration", e.target.value, e.target.name, e.target.name.month)}
+                                                />
+                                                ወር 
+                                            </label>
+                                            <label className="duration-label">
+                                                <input
+                                                    className="duration-input"
+                                                    type="number"
+                                                    name={`cholestroleDuration`}
+                                                    value={row.duration.cholestroleDuration.day}
+                                                    onChange={(e) => handleChange(index, "duration", e.target.value, e.target.name, e.target.name.day)}
+                                                />
+                                                ቀን
+                                            </label>
+                                        </div>
                                     }
                                     {medicalClients[index].diseaseType.obesity &&
-                                        <label>
+                                        <div className="duration">
                                             ከመጠን ያለፈ ውፍረት ከተከሰተ: 
-                                            <input
-                                            type="text"
-                                            name={`obesityDuration`}
-                                            value={row.duration["obesityDuration"]}
-                                            onChange={(e) => handleChange(index, "duration", e.target.value, e.target.name)}
-                                            />
-                                        </label>
+                                            <label className="duration-label">
+                                                <input
+                                                    className="duration-input"
+                                                    type="number"
+                                                    name={`obesityDuration`}
+                                                    value={row.duration.obesityDuration.year}
+                                                    onChange={(e) => handleChange(index, "duration", e.target.value, e.target.name, e.target.name.year)}
+                                                />
+                                                አመት 
+                                            </label>
+                                            <label className="duration-label">
+                                                <input
+                                                    className="duration-input"
+                                                    type="number"
+                                                    name={`obesityDuration`}
+                                                    value={row.duration.obesityDuration.month}
+                                                    onChange={(e) => handleChange(index, "duration", e.target.value, e.target.name, e.target.name.month)}
+                                                />
+                                                ወር
+                                            </label>
+                                            <label className="duration-label">
+                                                <input
+                                                    className="duration-input"
+                                                    type="number"
+                                                    name={`obesityDuration`}
+                                                    value={row.duration.obesityDuration.day}
+                                                    onChange={(e) => handleChange(index, "duration", e.target.value, e.target.name, e.target.name.day)}
+                                                />
+                                                ቀን
+                                            </label>
+                                        </div>
                                     }
                                     {medicalClients[index].diseaseType.other &&
-                                        <label>
+                                        <div className="duration">
                                             ሌላ: 
-                                            <input
-                                            type="text"
-                                            name={`otherDuration`}
-                                            value={row.duration["otherDuration"]}
-                                            onChange={(e) => handleChange(index, "duration", e.target.value, e.target.name)}
-                                            /> 
-                                        </label>
+                                            <label className="duration-label">
+                                                <input
+                                                    className="duration-input"
+                                                    type="number"
+                                                    name={`otherDuration`}
+                                                    value={row.duration.otherDuration.year}
+                                                    onChange={(e) => handleChange(index, "duration", e.target.value, e.target.name, e.target.name.year)}
+                                                />
+                                                አመት
+                                            </label>
+                                            <label className="duration-label">
+                                                <input
+                                                    className="duration-input"
+                                                    type="number"
+                                                    name={`otherDuration`}
+                                                    value={row.duration.otherDuration.month}
+                                                    onChange={(e) => handleChange(index, "duration", e.target.value, e.target.name, e.target.name.month)}
+                                                />
+                                                ወር 
+                                            </label>
+                                            <label className="duration-label">
+                                               <input
+                                                    className="duration-input"
+                                                    type="number"
+                                                    name={`otherDuration`}
+                                                    value={row.duration.otherDuration.day}
+                                                    onChange={(e) => handleChange(index, "duration", e.target.value, e.target.name, e.target.name.day)}
+                                                />
+                                                ቀን 
+                                            </label>
+                                        </div>
                                     }
                                 </div>
                             </td>
