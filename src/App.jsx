@@ -37,7 +37,8 @@ function App() {
             callingDate: "",
             resultFound: "",
             correctionTaken: "",
-            summary: "አንጀሊና "
+            summary: "አንጀሊና ",
+            appointmentDates: ["24-24-24", "25-25-26"]
         },
         {
             id: 3,
@@ -70,7 +71,8 @@ function App() {
             callingDate: "",
             resultFound: "ትርሃስ የተገኘባት ችግር የለም",
             correctionTaken: "",
-            summary: ""
+            summary: "",
+            appointmentDates: []
         },
         {
             id: 2,
@@ -103,7 +105,8 @@ function App() {
             callingDate: "",
             resultFound: "ጫላ ደህና ነው",
             correctionTaken: "",
-            summary: ""
+            summary: "",
+            appointmentDates: []
         }, 
     {
             id: 1,
@@ -136,7 +139,8 @@ function App() {
             callingDate: "",
             resultFound: "",
             correctionTaken: "አበበ ተሽሎታል",
-            summary: ""
+            summary: "",
+            appointmentDates: []
         },  
   ]);
   const [medicalResult, setMedicalResult] = useState(false);
@@ -144,9 +148,14 @@ function App() {
 
 
   const handleChange = (index, field, value, name, duration) => {  
-    {name? console.log(name): console.log("no name")}
     const updated = [...medicalClients];
+    // if(field === "appointmentDates") {
+    //   updated[index][field].push(value)
+    //   console.log(updated)
+    // }
+
     (name && duration)? updated[index][field][name][duration] = value: (name && !duration)? updated[index][field][name] = value: updated[index][field] = value;
+    
 
     // updated[index][field] = value;
     setMedicalClients(updated);

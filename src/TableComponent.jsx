@@ -47,7 +47,8 @@ function Table({ medicalClients, setMedicalClients, medicalResult, setMedicalRes
             callingDate: null,
             resultFound: "",
             correctionTaken: "",
-            summary: ""
+            summary: "",
+            appointmentDates: []
         }, ...medicalClients
     ]);
   };

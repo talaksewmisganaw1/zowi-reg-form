@@ -208,6 +208,7 @@ tr:nth-child(even) {
     justify-content: center;
     text-wrap: nowrap;
     margin-right: 3rem;
+    padding-left: 1rem;
 }
 
 .duration-input {
@@ -370,4 +371,67 @@ input::placeholder {
 
 .name-in-result-page span {
     font-weight: 600;
+}
+
+/* .appointment-section {
+    border: solid 1px black;
+} */
+
+/* .appointment-section * {
+    border: solid 1px black;
+} */
+
+.appointment-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: .5rem;
+}
+
+.appointments {
+    display: flex;
+    flex-direction: column;
+    /* border: solid 1px black; */
+}
+
+.appointment {
+    /* border: solid 1px black; */
+    display: flex;
+    margin-bottom: .6rem;
+}
+
+.delete-icon {
+    height: 1rem;
+    width: 1rem;
+    color: rgb(234, 12, 12);
+    font-size: .8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1rem;
+}
+
+.delete-icon:hover {
+    border: 1px solid red;
+    border-radius: .1rem;
+}
+
+.appointment-number {
+    margin-right: .3rem;
+}
+
+.no-appointment::marker {
+    font-size: 1.3rem;
+}
+
+.add-appointment-btn {
+    font-size: .9rem;
+    margin: 0 .5rem;
+    padding: .1rem .3rem;
+    background-color: var(--btn-bgr);
+    color: black;
+    border: solid grey 1.5px;
+    cursor: pointer;
+    border-radius: .2rem;
 }
