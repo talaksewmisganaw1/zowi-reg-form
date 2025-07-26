@@ -48,6 +48,7 @@ function Table({ medicalClients, setMedicalClients, medicalResult, setMedicalRes
             resultFound: "",
             correctionTaken: "",
             summary: "",
+            followupNote: "",
             appointmentDates: []
         }, ...medicalClients
     ]);

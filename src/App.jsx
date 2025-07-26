@@ -38,7 +38,8 @@ function App() {
             resultFound: "",
             correctionTaken: "",
             summary: "አንጀሊና ",
-            appointmentDates: ["24-24-24", "25-25-26"]
+            followupNote: "",
+            appointmentDates: []
         },
         {
             id: 3,
@@ -72,6 +73,7 @@ function App() {
             resultFound: "ትርሃስ የተገኘባት ችግር የለም",
             correctionTaken: "",
             summary: "",
+            followupNote: "",
             appointmentDates: []
         },
         {
@@ -106,6 +108,7 @@ function App() {
             resultFound: "ጫላ ደህና ነው",
             correctionTaken: "",
             summary: "",
+            followupNote: "",
             appointmentDates: []
         }, 
     {
@@ -140,6 +143,7 @@ function App() {
             resultFound: "",
             correctionTaken: "አበበ ተሽሎታል",
             summary: "",
+            followupNote: "",
             appointmentDates: []
         },  
   ]);
